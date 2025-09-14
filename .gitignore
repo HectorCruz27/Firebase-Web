@@ -1,2 +1,8 @@
-node_modules
-.env
+# Dependencias e instalaciones locales
+node_modules/
+
+# Archivos de configuración sensibles
+serviceAccountKey.json
+
+# Logs
+npm-debug.log
