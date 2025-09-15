@@ -30,9 +30,8 @@ loginForm.addEventListener('submit', (e) => {
             // Usuario ha iniciado sesión
             const user = userCredential.user;
             console.log('Usuario conectado:', user);
-            alert('¡Inicio de sesión exitoso!');
-            // Próximamente: Redirigir a un panel de control o página protegida.
-            // window.location.href = '/dashboard.html'; 
+            // Redirige al dashboard
+            window.location.href = 'dashboard.html'; 
         })
         .catch((error) => {
             console.error('Error en el login:', error);
