@@ -63,39 +63,50 @@ body {
     margin-right: 1rem;
 }
 
-.sidebar-footer {
-    margin-top: auto;
-}
-
-#logout-button {
-    width: 100%;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid white;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-}
-
-#logout-button:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-#logout-button .material-icons {
-    margin-right: 0.5rem;
-}
-
 /* Contenido Principal */
 .main-content {
     flex: 1;
     padding: 2rem 3rem;
     overflow-y: auto;
+}
+
+/* Estilos para la vista de perfil */
+#profile-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.profile-content {
+    flex-grow: 1;
+}
+
+.profile-footer {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+#logout-button-profile {
+    padding: 1rem 2rem;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+#logout-button-profile:hover {
+    background-color: #d32f2f;
+}
+
+#logout-button-profile .material-icons {
+    margin-right: 0.5rem;
 }
 
 .main-header {

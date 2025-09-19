@@ -22,19 +22,21 @@ let selectedClientType = '';
 document.addEventListener('DOMContentLoaded', () => {
     // --- Elementos del DOM ---
     const userEmailSpan = document.getElementById('user-email');
-    const logoutButton = document.getElementById('logout-button');
+    const logoutButtonProfile = document.getElementById('logout-button-profile');
 
     const views = {
         dashboard: document.getElementById('dashboard-view'),
         createClient: document.getElementById('create-client-view'),
         clientType: document.getElementById('client-type-view'),
         naturalForm: document.getElementById('natural-person-form-view'),
-        juridicalForm: document.getElementById('juridical-person-form-view')
+        juridicalForm: document.getElementById('juridical-person-form-view'),
+        profile: document.getElementById('profile-view')
     };
 
     const navLinks = {
         dashboard: document.getElementById('dashboard-link'),
         createClient: document.getElementById('create-client-link'),
+        profile: document.getElementById('profile-link'),
     };
 
     // --- Autenticación ---
@@ -46,22 +48,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    logoutButton?.addEventListener('click', () => signOut(auth));
+    logoutButtonProfile?.addEventListener('click', () => signOut(auth));
 
     // --- Lógica de Navegación ---
     const switchView = (viewToShow) => {
-        Object.values(views).forEach(view => view.style.display = 'none');
-        if (viewToShow) viewToShow.style.display = 'block';
+        // Ocultar todas las vistas
+        Object.values(views).forEach(view => {
+            if (view) view.style.display = 'none';
+        });
 
-        Object.values(navLinks).forEach(link => link.classList.remove('active'));
+        // Mostrar la vista correcta con el estilo de display adecuado
+        if (viewToShow) {
+            if (viewToShow === views.profile) {
+                viewToShow.style.display = 'flex';
+            } else {
+                viewToShow.style.display = 'block';
+            }
+        }
+
+        // Actualizar el link de navegación activo
+        Object.values(navLinks).forEach(link => {
+            if (link) link.classList.remove('active');
+        });
+        
         const inCreationFlow = [views.createClient, views.clientType, views.naturalForm, views.juridicalForm].includes(viewToShow);
-        navLinks.dashboard.classList.toggle('active', viewToShow === views.dashboard);
-        navLinks.createClient.classList.toggle('active', inCreationFlow);
+
+        if (viewToShow === views.dashboard) {
+            navLinks.dashboard.classList.add('active');
+        } else if (inCreationFlow) {
+            navLinks.createClient.classList.add('active');
+        } else if (viewToShow === views.profile) {
+            navLinks.profile.classList.add('active');
+        }
     };
 
     // Navegación del menú principal
     navLinks.dashboard.addEventListener('click', (e) => { e.preventDefault(); switchView(views.dashboard); });
     navLinks.createClient.addEventListener('click', (e) => { e.preventDefault(); switchView(views.createClient); });
+    navLinks.profile.addEventListener('click', (e) => { e.preventDefault(); switchView(views.profile); });
 
     // Flujo de Creación: Seleccionar Sociedad
     document.querySelectorAll('.society-card').forEach(card => {
@@ -106,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         console.log("Guardando Cliente Natural:", formData);
         alert('Cliente Natural guardado (revisa la consola para ver los datos).');
-        switchView(views.dashboard); // Volver al dashboard
+        switchView(views.dashboard);
     });
 
     document.getElementById('juridical-person-form').addEventListener('submit', (e) => {
@@ -122,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         console.log("Guardando Cliente Jurídico:", formData);
         alert('Cliente Jurídico guardado (revisa la consola para ver los datos).');
-        switchView(views.dashboard); // Volver al dashboard
+        switchView(views.dashboard);
     });
 
     // --- Vista Inicial ---
